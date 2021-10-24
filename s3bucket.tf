@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "b" {
-  bucket = "lwtf"
+  bucket = "s3_using-job"
   acl    = "private"
 
   tags = {
