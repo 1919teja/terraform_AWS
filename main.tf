@@ -1,11 +1,15 @@
+
 provider "aws" {
-  region = var.aws_region
+
+  access_key  = "AKIA3AHGVKKXXIKTX24V"
+  secret_key = "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" 
+  region     = "us-east-2"
 }
 
+
 #Create security group with firewall rules
-resource "aws_security_group" "my_security_group" {
-  name        = var.security_group
-  description = "security group for Ec2 instance"
+resource "aws_security_group" "sec-auto_jenkins_job" {
+  name        = "sec-auto_jenkins_job"
 
   ingress {
     from_port   = 8080
@@ -22,7 +26,7 @@ resource "aws_security_group" "my_security_group" {
   }
 
  # outbound from jenkis server
-  egress {
+  egress { 
     from_port   = 0
     to_port     = 65535
     protocol    = "tcp"
@@ -30,26 +34,20 @@ resource "aws_security_group" "my_security_group" {
   }
 
   tags= {
-    Name = var.security_group
+    Name = "security_jenkins_job"
   }
 }
 
-# Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
-  security_groups= [var.security_group]
+resource "aws_instance" "automate-job" {
+  ami           = "ami-0b9064170e32bde34"
+  key_name = "awskeypair"
+  instance_type = "t2.micro"
+  security_groups= [ "sec-auto_jenkins_job"]
   tags= {
-    Name = var.tag_name
+    Name = "automate-jobs"
   }
 }
 
-# Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
-  vpc      = true
-  instance = aws_instance.myFirstInstance.id
-tags= {
-    Name = "my_elastic_ip"
-  }
-}
+
+
+
