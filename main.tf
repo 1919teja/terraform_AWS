@@ -39,7 +39,7 @@ resource "aws_security_group" "sec-auto_jenkins_job" {
 }
 
 resource "aws_instance" "automate-job" {
-  ami           = "ami-0b9064170e32bde34"
+  ami           = "ami-09d3b3274b6c5d4aa"
   key_name = "awskeypair"
   instance_type = "t2.micro"
   security_groups= [ "sec-auto_jenkins_job"]
